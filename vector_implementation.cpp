@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <utility>
+#include <iostream>
 
 template <typename Object> //Allows for use of multiple data types
 class Vector
@@ -57,7 +58,7 @@ public:
     void resize(int newSize)
     {
         if (newSize > theCapacity)
-        { reserve(newSize * 2); }      
+        { reserve(newSize * 2); }
         theSize = newSize;
     }
 
@@ -125,9 +126,16 @@ public:
 
     const_iterator end() const
     { return &objects[size()]; }
-    
+
 private:
     int theSize;
     int theCapacity;
     Object * objects;
 };
+
+int main()
+{
+    Vector<int> v(5);
+
+    return 0;
+}

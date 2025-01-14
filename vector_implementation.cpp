@@ -9,23 +9,28 @@ public:
         objects = new Object[theCapacity];
     } //Makes sure that instantiations of a vector object are in the form: Vector v(10)
 
+    //The code below defines as deep copy constructor
     Vector(const Vector & rhs) : theSize(rhs.theSize), theCapacity(rhs.theCapacity), objects(nullptr)
     {
         objects = new Object[theCapacity];
         for (int k = 0; k < theSize; ++k)
-            objects[k] = rhs.objects[k];
+            objects[k] = rhs.objects[k]; //copies the contents of the Vector object onto the new Vector object
     }
 
+    //Overloaded = which functions as a deep copy constructor
     Vector & operator=(const Vector & rhs)
     {
         Vector copy = rhs;
-        std::swap( *this, copy);
+        std::swap( *this, copy); //Copies the contents of the Vector object on the right onto the one on the left
         return *this;
     }
 
-    ~Vector( )
-    { delete [ ] objects; }
+    ~Vector( ) //Destructor
+    { delete [] objects; } //Releases dynamically allocates memory
 
+    //Definition of a move constructor
+    //Transfers resources from one Vector object onto another
+    //'&&' allows functions to transfer resources onto new objects
     Vector(Vector && rhs) : theSize(rhs.theSize), theCapacity(rhs.theCapacity), objects(rhs.objects)
     {
         rhs.objects = nullptr;
@@ -42,12 +47,14 @@ public:
         return *this;
     }
 
+    //Enlarges the capacity of a vector
     void resize(int newSize)
     {
         if (newSize > theCapacity)
             reserve(newSize * 2)
         theSize = newSize;
     }
+
 
     void reserve(int newCapacity)
     {
